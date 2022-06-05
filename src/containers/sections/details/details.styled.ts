@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 export const Container = styled.main`
   width: 100%;
+  height: 80vh;
 
   display: flex;
   justify-content: center;
@@ -10,14 +12,10 @@ export const Container = styled.main`
 `
 
 export const Content = styled.div`
-  width: 600px;
-  padding: 30px;
   border-radius: 8px;
 
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
 
   ${({ theme }) => css`
     background-color: ${theme.colors.backgroundSecondary};
@@ -28,52 +26,8 @@ export const NamePokemon = styled.h1`
   margin-bottom: 10px;
 `
 
-export const ContentNextOrPrevious = styled.div`
-  width: 100%;
-  height: 60px;
-  gap: 10px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
-export const LeftPrevious = styled.div`
-  width: 100%;
-  height: 100%;
-
-  border-radius: 8px 0 0 8px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  ${({ theme }) => css`
-    background-color: ${theme.colors.red}D4;
-  `}
-`
-
-export const LeftPreviousText = styled.div``
-
-export const RightNext = styled.div`
-  width: 100%;
-  height: 100%;
-
-  border-radius: 0 8px 8px 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  ${({ theme }) => css`
-    background-color: ${theme.colors.red}D4;
-  `}
-`
-
-export const RightNextText = styled.div``
-
 export const ImagePokemon = styled.img`
-  width: 300px;
+  width: 260px;
   padding: 20px;
   border-radius: 5px;
 
@@ -81,6 +35,46 @@ export const ImagePokemon = styled.img`
     background-color: ${theme.colors.gray}33;
   `}
 `
+
+export const Left = styled.div`
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+export const Right = styled.div`
+  padding: 20px;
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  ${({ theme }) => css`
+    background-color: ${theme.colors.gray}4D;
+  `}
+`
+
+export const InfoContainer = styled.div`
+  border-radius: 8px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+`
+
+export const InfoContent = styled.div`
+  padding: 5px;
+`
+
+export const TitleInfo = styled.h5``
+
+export const BodyInfo = styled.p``
 
 export const ListTypes = styled.ol`
   margin-top: 10px;
@@ -93,39 +87,24 @@ export const ListTypes = styled.ol`
 
 export const ItemType = styled.li``
 
-export const Weight = styled.span``
-
-export const HeightPokemon = styled.span``
-
 export const ListStats = styled.ul`
   list-style: none;
 `
 
-export const ItemStats = styled.li``
+export const ItemStats = styled.li`
+  margin-bottom: 10px;
+`
 
 export const NameStats = styled.p``
 
-export type ProgressStatsType = {
-  type?:
-    | 'hp'
-    | 'attack'
-    | 'defense'
-    | 'special-attack'
-    | 'special-attack'
-    | 'speed'
-    | 'accuracy'
-    | 'evasion'
-}
+export const ButtonPreviousOrNext = styled.div`
+  padding: 20px;
 
-export const ProgressStats = styled.progress<ProgressStatsType>`
-  width: 300px;
-  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+`
 
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  [value]::-webkit-progress-bar {
-    background-color: 'red';
-  }
+export const ButtonClickForPage = styled(Link)`
+  display: flex;
+  align-items: center;
 `

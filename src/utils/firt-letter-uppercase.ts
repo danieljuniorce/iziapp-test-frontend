@@ -1,3 +1,9 @@
 export default function firstLetterUppercase(text: string) {
-  return text.charAt(0).toUpperCase() + text.slice(1)
+  const arrayName = text.split('-')
+
+  const result = arrayName.map(
+    (name) => name.charAt(0).toUpperCase() + name.slice(1) + ' '
+  )
+
+  return result
 }

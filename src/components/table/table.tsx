@@ -41,30 +41,29 @@ function Table({ header, body }: TableProps) {
             </Divider>
           </Header>
           <Body>
-            {body.map((bodyInfo) => (
-              <Divider key={getIdPokemonInUrl(bodyInfo.url)}>
-                <td>{getIdPokemonInUrl(bodyInfo.url)}</td>
-                <td>
-                  <ContentImagePokemon onClick={() => {}}>
-                    <Maximize2 />
-                    <ImgPokemonInTable
-                      src={getImagePokemon(getIdPokemonInUrl(bodyInfo.url))}
-                    />
-                  </ContentImagePokemon>
-                </td>
-                <td>{firstLetterUppercase(bodyInfo.name)}</td>
-                <td>
-                  <Button yellow>Click for favorite</Button>
-                </td>
-                <td>
-                  <Button>
+            {body &&
+              body.map((bodyInfo) => (
+                <Divider key={getIdPokemonInUrl(bodyInfo.url)}>
+                  <td>{getIdPokemonInUrl(bodyInfo.url)}</td>
+                  <td>
+                    <ContentImagePokemon onClick={() => {}}>
+                      <Maximize2 />
+                      <ImgPokemonInTable
+                        src={getImagePokemon(getIdPokemonInUrl(bodyInfo.url))}
+                      />
+                    </ContentImagePokemon>
+                  </td>
+                  <td>{firstLetterUppercase(bodyInfo.name)}</td>
+                  <td>
+                    <Button yellow>Click for favorite</Button>
+                  </td>
+                  <td>
                     <Link to={`/details/${getIdPokemonInUrl(bodyInfo.url)}`}>
-                      View Details
+                      <Button>View Details</Button>
                     </Link>
-                  </Button>
-                </td>
-              </Divider>
-            ))}
+                  </td>
+                </Divider>
+              ))}
           </Body>
         </Content>
       </Container>

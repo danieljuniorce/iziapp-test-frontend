@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { PokemonTypesProps } from '../../interface/pokemon'
 
 export type BadgesColorsProps = {
   indigo?: boolean
@@ -13,6 +14,8 @@ export type BadgesColorsProps = {
   cyan?: boolean
   gray?: boolean
   white?: boolean
+
+  typePokemon?: PokemonTypesProps
 }
 
 export const Container = styled.div<BadgesColorsProps>`
@@ -37,64 +40,84 @@ export const Container = styled.div<BadgesColorsProps>`
     teal,
     cyan,
     white,
+    typePokemon,
+    indigo,
   }) => {
-    if (blue) {
+    if (blue || typePokemon === 'ice' || typePokemon === 'water') {
       return css`
         background-color: ${theme.colors.blue};
         color: ${theme.colors.white};
       `
     }
 
-    if (purple) {
+    if (purple || typePokemon === 'ghost' || typePokemon === 'shadow') {
       return css`
         background-color: ${theme.colors.purple};
         color: ${theme.colors.white};
       `
     }
 
-    if (red) {
+    if (
+      red ||
+      typePokemon === 'fairy' ||
+      typePokemon === 'rock' ||
+      typePokemon === 'poison'
+    ) {
       return css`
         background-color: ${theme.colors.red};
         color: ${theme.colors.white};
       `
     }
 
-    if (orange) {
+    if (orange || typePokemon === 'fire') {
       return css`
         background-color: ${theme.colors.orange};
         color: ${theme.colors.white};
       `
     }
 
-    if (yellow) {
+    if (yellow || typePokemon === 'normal' || typePokemon === 'electric') {
       return css`
         background-color: ${theme.colors.yellow};
-        color: color: #212121;
+        color: #212121;
       `
     }
 
-    if (green) {
+    if (green || typePokemon === 'grass') {
       return css`
         background-color: ${theme.colors.green};
         color: ${theme.colors.white};
       `
     }
 
-    if (teal) {
+    if (teal || typePokemon === 'bug') {
       return css`
         background-color: ${theme.colors.teal};
         color: ${theme.colors.white};
       `
     }
 
-    if (cyan) {
+    if (cyan || typePokemon === 'fighting') {
       return css`
         background-color: ${theme.colors.cyan};
         color: ${theme.colors.white};
       `
     }
 
-    if (white) {
+    if (
+      white ||
+      typePokemon === 'flying' ||
+      typePokemon === 'unknown' ||
+      typePokemon === 'steel' ||
+      typePokemon === 'ground'
+    ) {
+      return css`
+        background-color: ${theme.colors.white};
+        color: #212121;
+      `
+    }
+
+    if (indigo || typePokemon === 'psychic' || typePokemon === 'dragon') {
       return css`
         background-color: ${theme.colors.white};
         color: #212121;
@@ -102,8 +125,8 @@ export const Container = styled.div<BadgesColorsProps>`
     }
 
     return css`
-      background-color: ${theme.colors.indigo};
-      color: ${theme.colors.white};
+      background-color: #000000;
+      color: #ffffff;
     `
   }}
 `

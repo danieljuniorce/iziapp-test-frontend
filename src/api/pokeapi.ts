@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { PokemonTypesProps } from '../interface/pokemon'
 import { Axios } from './axios-config'
 
 export type ListPokemonProps = {
@@ -83,6 +84,9 @@ export type InfoPokemonProps = {
         front_default: string
         front_female: string | null
       }
+      'official-artwork': {
+        front_default: string
+      }
     }
   }
 
@@ -98,7 +102,7 @@ export type InfoPokemonProps = {
   types: Array<{
     slot: number
     type: {
-      name: string
+      name: PokemonTypesProps
       url: string
     }
   }>

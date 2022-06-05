@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 
 import { store, persistor } from './redux/store'
 import App from './App'
+import 'react-circular-progressbar/dist/styles.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

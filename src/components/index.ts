@@ -5,6 +5,25 @@ import Paginate from './paginate/paginate'
 import Button from './button/button'
 import ImageZoom from './image-zoom/image-zoom'
 import Badges from './badges/badges'
+import Loading from './loading/loading'
 
-export { Table, SideMenu, Wrapper, Paginate, Button, ImageZoom, Badges }
-export default { Table, SideMenu, Wrapper, Paginate, Button, ImageZoom, Badges }
+export {
+  Table,
+  SideMenu,
+  Wrapper,
+  Paginate,
+  Button,
+  ImageZoom,
+  Badges,
+  Loading,
+}
+export default {
+  Table,
+  SideMenu,
+  Wrapper,
+  Paginate,
+  Button,
+  ImageZoom,
+  Badges,
+  Loading,
+}

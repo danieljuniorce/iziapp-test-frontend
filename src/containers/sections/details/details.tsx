@@ -1,95 +1,149 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Badges, SideMenu, Wrapper } from '../../../components'
+import { Badges, SideMenu, Wrapper, Loading } from '../../../components'
+import { ChevronLeft, ChevronRight, Home } from 'react-feather'
 
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, Link } from 'react-router-dom'
 
 import {
   Container,
   Content,
-  ContentNextOrPrevious,
   ImagePokemon,
-  LeftPrevious,
-  LeftPreviousText,
   NamePokemon,
-  RightNext,
-  RightNextText,
   ItemType,
   ListTypes,
-  Weight,
-  HeightPokemon,
-  ItemStats,
-  ListStats,
-  ProgressStats,
-  NameStats,
+  Left,
+  Right,
+  BodyInfo,
+  InfoContent,
+  TitleInfo,
+  InfoContainer,
+  ButtonClickForPage,
+  ButtonPreviousOrNext,
 } from './details.styled'
 import PokeApi, { InfoPokemonProps } from '../../../api/pokeapi'
 import { firstLetterUppercase } from '../../../utils'
 
 function Details({ match }: RouteComponentProps<{ id: string }>) {
+  const [loading, setLoading] = useState<boolean>(false)
   const [infoPokemon, setInfoPokemon] = useState<InfoPokemonProps | null>(null)
 
   const _loadInfoPokemonPerId = useCallback(async () => {
+    setLoading(true)
     try {
       const result = await PokeApi.infoPokemon(parseInt(match.params.id))
       setInfoPokemon(result)
+
+      setLoading(false)
     } catch (err) {
+      setLoading(false)
     } finally {
+      setLoading(false)
     }
   }, [match, infoPokemon])
 
+  const _getIdForPreviousOrNextPage = (identification: 'next' | 'previous') => {
+    const { id } = match.params
+
+    const idParseForInt = parseInt(id)
+
+    if (identification === 'next') {
+      return idParseForInt > 0 ? idParseForInt + 1 : idParseForInt
+    } else {
+      return idParseForInt > 1 ? idParseForInt - 1 : idParseForInt
+    }
+  }
+
   useEffect(() => {
     _loadInfoPokemonPerId()
-  }, [])
+  }, [match])
 
   return (
     <>
+      <Loading visible={loading} />
       <SideMenu />
       <Wrapper>
+        <ButtonPreviousOrNext>
+          <ButtonClickForPage
+            to={`/details/${_getIdForPreviousOrNextPage('previous')}`}
+          >
+            <ChevronLeft />
+            &nbsp; Previous
+          </ButtonClickForPage>
+
+          <ButtonClickForPage to="/">
+            <Home />
+            &nbsp; Go Back Home
+          </ButtonClickForPage>
+          <ButtonClickForPage
+            to={`/details/${_getIdForPreviousOrNextPage('next')}`}
+          >
+            Next &nbsp;
+            <ChevronRight />
+          </ButtonClickForPage>
+        </ButtonPreviousOrNext>
         <Container>
           <Content>
             {infoPokemon && (
               <>
-                <NamePokemon>{`#${infoPokemon?.id} ${firstLetterUppercase(
-                  infoPokemon?.name
-                )}`}</NamePokemon>
+                <Left>
+                  <NamePokemon>
+                    #{infoPokemon.id} {firstLetterUppercase(infoPokemon!.name)}
+                  </NamePokemon>
 
-                <ImagePokemon
-                  src={infoPokemon!.sprites.other.dream_world.front_default}
-                  alt={`image pokemon ${infoPokemon?.name}`}
-                />
+                  <ImagePokemon
+                    src={
+                      infoPokemon!.sprites.other['official-artwork']
+                        .front_default
+                    }
+                    alt={`image pokemon ${infoPokemon?.name}`}
+                  />
 
-                <ListTypes>
-                  {infoPokemon?.types.map((type) => (
-                    <ItemType>
-                      <Badges green>
-                        {firstLetterUppercase(type.type.name)}
-                      </Badges>
-                    </ItemType>
-                  ))}
-                </ListTypes>
+                  <ListTypes>
+                    {infoPokemon?.types.map(({ type }) => (
+                      <ItemType>
+                        <Badges typePokemon={type.name}>
+                          {firstLetterUppercase(type.name)}
+                        </Badges>
+                      </ItemType>
+                    ))}
+                  </ListTypes>
+                </Left>
 
-                {/* <Weight>
-                  Weight: {infoPokemon?.weight ? infoPokemon.weight : '???.?'}kg
-                </Weight>
-                <HeightPokemon>
-                  Height: 0.
-                  {infoPokemon?.height ? infoPokemon?.height : '???.?'}m
-                </HeightPokemon> */}
+                <Right>
+                  <InfoContainer>
+                    <InfoContent>
+                      <TitleInfo>Height</TitleInfo>
+                      <BodyInfo>
+                        {infoPokemon?.height ? infoPokemon.height : '???.?'}m
+                      </BodyInfo>
+                    </InfoContent>
 
-                <ListStats>
-                  {infoPokemon?.stats.map((stat) => (
-                    <ItemStats>
-                      <NameStats>
-                        {firstLetterUppercase(stat.stat.name)}
-                      </NameStats>
+                    <InfoContent>
+                      <TitleInfo>Weight</TitleInfo>
+                      <BodyInfo>
+                        {infoPokemon?.weight ? infoPokemon.weight : '???.?'}kg
+                      </BodyInfo>
+                    </InfoContent>
 
-                      <ProgressStats
-                        value={stat.base_stat}
-                        max={100}
-                      ></ProgressStats>
-                    </ItemStats>
-                  ))}
-                </ListStats>
+                    <InfoContent>
+                      <TitleInfo>Abilities</TitleInfo>
+                      <BodyInfo>
+                        {infoPokemon?.abilities.map((ability) => {
+                          if (ability.is_hidden) {
+                            return firstLetterUppercase(ability.ability.name)
+                          }
+                        })}
+                      </BodyInfo>
+                    </InfoContent>
+
+                    {infoPokemon.stats.map(({ stat, base_stat }) => (
+                      <InfoContent>
+                        <TitleInfo>{firstLetterUppercase(stat.name)}</TitleInfo>
+                        <BodyInfo>{base_stat}</BodyInfo>
+                      </InfoContent>
+                    ))}
+                  </InfoContainer>
+                </Right>
               </>
             )}
           </Content>
