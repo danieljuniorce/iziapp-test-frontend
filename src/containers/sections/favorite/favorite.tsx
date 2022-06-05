@@ -1,6 +1,8 @@
 import { useCallback, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import Tooltip from 'react-tooltip'
+
 import { Loading, Wrapper, SideMenu, Button } from '../../../components'
 import Alert, { AlertRefProps } from '../../../modal/alert/alert'
 import { RootState } from '../../../redux/reducers'
@@ -52,7 +54,13 @@ function Favorite() {
           favorite.map((favorite) => (
             <Card>
               <TitleCard>#{favorite.id + ' ' + favorite.name}</TitleCard>
-              <ImgCard src={getImagePokemon(favorite.id)} />
+              <Tooltip place="top" effect="solid" />
+              <Link to={`/details/${favorite.id}`}>
+                <ImgCard
+                  src={getImagePokemon(favorite.id)}
+                  data-tip="Click for View Details"
+                />
+              </Link>
 
               <Button
                 red
@@ -62,6 +70,9 @@ function Favorite() {
               </Button>
             </Card>
           ))}
+
+        {favorite.length === 0 &&
+          'Not adding any pokemon to your favorites list.'}
       </CardList>
     )
   }

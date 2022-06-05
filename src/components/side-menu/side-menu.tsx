@@ -23,7 +23,7 @@ function SideMenu(): JSX.Element {
       <Tooltip place="left" effect="solid" />
 
       <Content>
-        <Items to="/">
+        <Items to="/" active={false}>
           <Logo />
         </Items>
 
@@ -42,7 +42,7 @@ function SideMenu(): JSX.Element {
           <Star />
         </Items>
 
-        <Items to="#" data-tip="Change Theme">
+        <Items to="#" data-tip="Change Theme" active={false}>
           <ChangeTheme />
         </Items>
       </Content>

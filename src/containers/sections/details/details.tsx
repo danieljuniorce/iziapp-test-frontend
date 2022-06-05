@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Badges, SideMenu, Wrapper, Loading } from '../../../components'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { Badges, SideMenu, Wrapper, Loading, Button } from '../../../components'
 import { ChevronLeft, ChevronRight, Home } from 'react-feather'
-
-import { RouteComponentProps, Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { RouteComponentProps } from 'react-router-dom'
 
 import {
   Container,
@@ -20,20 +20,53 @@ import {
   ButtonClickForPage,
   ButtonPreviousOrNext,
 } from './details.styled'
+
 import PokeApi, { InfoPokemonProps } from '../../../api/pokeapi'
-import { firstLetterUppercase } from '../../../utils'
+import {
+  firstLetterUppercase,
+  verifyDuplicatePokemonInFavorite,
+} from '../../../utils'
+import { RootState } from '../../../redux/reducers'
+import Alert, { AlertRefProps } from '../../../modal/alert/alert'
+import {
+  addFavorite,
+  removeFavorite,
+} from '../../../redux/reducers/favorite/favorite'
 
 function Details({ match }: RouteComponentProps<{ id: string }>) {
-  const [loading, setLoading] = useState<boolean>(false)
-  const [infoPokemon, setInfoPokemon] = useState<InfoPokemonProps | null>(null)
+  const dispatch = useDispatch()
+  const favorite = useSelector((state: RootState) => state.favorite!.favorite)
+  const alertRef = useRef<AlertRefProps>()
 
-  const { id } = match.params
+  const [loading, setLoading] = useState<boolean>(false)
+  const [infoPokemon, setInfoPokemon] = useState<InfoPokemonProps>()
+  const [favoriteOrNotFavorite, setFavoriteOrNotFavorite] =
+    useState<boolean>(false)
+
+  const _getIdForPreviousOrNextPage = useCallback(
+    (identification: 'next' | 'previous') => {
+      const idParseForInt = parseInt(match.params.id)
+
+      if (identification === 'next') {
+        return idParseForInt > 0 ? idParseForInt + 1 : idParseForInt
+      } else {
+        return idParseForInt > 1 ? idParseForInt - 1 : idParseForInt
+      }
+    },
+    [match]
+  )
 
   const _loadInfoPokemonPerId = useCallback(async () => {
     setLoading(true)
     try {
       const result = await PokeApi.infoPokemon(parseInt(match.params.id))
-      setInfoPokemon(result)
+
+      setFavoriteOrNotFavorite(
+        favorite.filter((favorite) => favorite.id === parseInt(match.params.id))
+          ?.length > 0
+      )
+
+      setInfoPokemon(result!)
 
       setLoading(false)
     } catch (err) {
@@ -41,23 +74,67 @@ function Details({ match }: RouteComponentProps<{ id: string }>) {
     } finally {
       setLoading(false)
     }
-  }, [id, infoPokemon])
+  }, [match, infoPokemon, setInfoPokemon, dispatch])
 
-  const _getIdForPreviousOrNextPage = (identification: 'next' | 'previous') => {
-    const { id } = match.params
+  const _addPokemonInListFavorite = useCallback(async () => {
+    try {
+      const newPokemonFavorite = verifyDuplicatePokemonInFavorite({
+        id: infoPokemon!.id,
+        name: infoPokemon!.name,
+      })
 
-    const idParseForInt = parseInt(id)
-
-    if (identification === 'next') {
-      return idParseForInt > 0 ? idParseForInt + 1 : idParseForInt
-    } else {
-      return idParseForInt > 1 ? idParseForInt - 1 : idParseForInt
+      if (newPokemonFavorite.has) {
+        alertRef.current!.show({
+          buttonText: 'Ok',
+          type: 'info',
+          title: 'Hey!!',
+          message: `Pokemon ${infoPokemon?.name} is already on your favorites list.`,
+        })
+        setFavoriteOrNotFavorite(true)
+      } else {
+        dispatch(addFavorite(newPokemonFavorite.value))
+        alertRef.current!.show({
+          buttonText: 'Ok',
+          type: 'favorite',
+          title: 'New pokemon in favorites',
+          message: `The pokemon ${infoPokemon?.name} has been successfully added to your favorites list.`,
+        })
+        setFavoriteOrNotFavorite(true)
+      }
+    } catch (err) {
+      alertRef.current!.show({
+        buttonText: 'Close',
+        type: 'error',
+        title: 'Oops! Something went wrong.',
+        message: `Didn't add pokemon to favorites.`,
+      })
     }
-  }
+  }, [dispatch, favorite, infoPokemon])
+
+  const _removePokemonInListFavorite = useCallback(() => {
+    try {
+      dispatch(removeFavorite(match.params.id))
+
+      alertRef.current?.show({
+        buttonText: 'Ok',
+        type: 'success',
+        title: 'Pokemon successfully removed ',
+        message: 'The pokemon has been removed from your favorite.',
+      })
+      setFavoriteOrNotFavorite(false)
+    } catch (err) {
+      alertRef.current?.show({
+        buttonText: 'Closed',
+        type: 'error',
+        title: 'Ops!',
+        message: 'Something went wrong.',
+      })
+    }
+  }, [dispatch, match, favorite, alertRef, infoPokemon])
 
   useEffect(() => {
     _loadInfoPokemonPerId()
-  }, [id])
+  }, [match])
 
   return (
     <>
@@ -101,14 +178,25 @@ function Details({ match }: RouteComponentProps<{ id: string }>) {
                   />
 
                   <ListTypes>
-                    {infoPokemon?.types.map(({ type }) => (
-                      <ItemType>
+                    {infoPokemon!.types.map(({ type }, index) => (
+                      <ItemType key={index}>
                         <Badges typePokemon={type.name}>
                           {firstLetterUppercase(type.name)}
                         </Badges>
                       </ItemType>
                     ))}
                   </ListTypes>
+
+                  {!favoriteOrNotFavorite && (
+                    <Button yellow onClick={_addPokemonInListFavorite}>
+                      Add Favorite
+                    </Button>
+                  )}
+                  {favoriteOrNotFavorite && (
+                    <Button red onClick={_removePokemonInListFavorite}>
+                      Remove Favorite
+                    </Button>
+                  )}
                 </Left>
 
                 <Right>
@@ -151,8 +239,10 @@ function Details({ match }: RouteComponentProps<{ id: string }>) {
           </Content>
         </Container>
       </Wrapper>
+
+      <Alert ref={alertRef} />
     </>
   )
 }
 
-export default Details
+export default memo(Details)
