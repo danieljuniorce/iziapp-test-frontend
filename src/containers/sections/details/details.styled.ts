@@ -9,6 +9,10 @@ export const Container = styled.main`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  @media only screen and (max-width: 992px) {
+    justify-content: flex-start;
+  }
 `
 
 export const Content = styled.div`
@@ -21,6 +25,11 @@ export const Content = styled.div`
     background-color: ${theme.colors.backgroundSecondary};
     box-shadow: ${theme.colors.boxShadow};
   `}
+
+  @media only screen and (max-width: 992px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `
 
 export const NamePokemon = styled.h1`
@@ -35,6 +44,11 @@ export const ImagePokemon = styled.img`
   ${({ theme }) => css`
     background-color: ${theme.colors.gray}33;
   `}
+
+  @media only screen and (max-width: 992px) {
+    width: 140px;
+    padding: 10px;
+  }
 `
 
 export const Left = styled.div`
@@ -44,6 +58,10 @@ export const Left = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 992px) {
+    padding: 20px;
+  }
 `
 
 export const Right = styled.div`
@@ -58,6 +76,10 @@ export const Right = styled.div`
   ${({ theme }) => css`
     background-color: ${theme.colors.gray}4D;
   `}
+
+  @media only screen and (max-width: 992px) {
+    padding: 20px;
+  }
 `
 
 export const InfoContainer = styled.div`
@@ -103,9 +125,24 @@ export const ButtonPreviousOrNext = styled.div`
 
   display: flex;
   justify-content: space-between;
+
+  @media only screen and (max-width: 992px) {
+    padding: 10px;
+  }
 `
 
 export const ButtonClickForPage = styled(Link)`
   display: flex;
   align-items: center;
+
+  @media only screen and (max-width: 992px) {
+    span {
+      display: none;
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
 `

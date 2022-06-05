@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Tooltip from 'react-tooltip'
 
 import { Loading, Wrapper, SideMenu, Button } from '../../../components'
 import Alert, { AlertRefProps } from '../../../modal/alert/alert'
@@ -51,15 +50,11 @@ function Favorite() {
     return (
       <CardList>
         {favorite &&
-          favorite.map((favorite) => (
-            <Card>
+          favorite.map((favorite, index) => (
+            <Card key={index}>
               <TitleCard>#{favorite.id + ' ' + favorite.name}</TitleCard>
-              <Tooltip place="top" effect="solid" />
               <Link to={`/details/${favorite.id}`}>
-                <ImgCard
-                  src={getImagePokemon(favorite.id)}
-                  data-tip="Click for View Details"
-                />
+                <ImgCard src={getImagePokemon(favorite.id)} />
               </Link>
 
               <Button

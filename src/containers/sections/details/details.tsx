@@ -146,17 +146,17 @@ function Details({ match }: RouteComponentProps<{ id: string }>) {
             to={`/details/${_getIdForPreviousOrNextPage('previous')}`}
           >
             <ChevronLeft />
-            &nbsp; Previous
+            &nbsp; <span>Previous</span>
           </ButtonClickForPage>
 
           <ButtonClickForPage to="/">
             <Home />
-            &nbsp; Go Back Home
+            &nbsp; <span>Go Back Home</span>
           </ButtonClickForPage>
           <ButtonClickForPage
             to={`/details/${_getIdForPreviousOrNextPage('next')}`}
           >
-            Next &nbsp;
+            <span>Next</span> &nbsp;
             <ChevronRight />
           </ButtonClickForPage>
         </ButtonPreviousOrNext>
@@ -226,8 +226,8 @@ function Details({ match }: RouteComponentProps<{ id: string }>) {
                       </BodyInfo>
                     </InfoContent>
 
-                    {infoPokemon.stats.map(({ stat, base_stat }) => (
-                      <InfoContent>
+                    {infoPokemon.stats.map(({ stat, base_stat }, index) => (
+                      <InfoContent key={index}>
                         <TitleInfo>{firstLetterUppercase(stat.name)}</TitleInfo>
                         <BodyInfo>{base_stat}</BodyInfo>
                       </InfoContent>

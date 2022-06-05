@@ -45,13 +45,11 @@ function Home() {
   return (
     <>
       <SideMenu />
-      <Wrapper>
-        <Loading visible={loading} />
+      <Loading visible={loading} />
 
-        <Table
-          header={['#', 'Sprite', 'Name', 'Favorite', 'View']}
-          body={pokemons}
-        />
+      <Wrapper>
+        <Table header={['#', 'Sprite', 'Name', 'View']} body={pokemons} />
+
         <Paginate
           pageCount={countPages}
           onPageChange={(page) => _getListPokemon(page.selected)}

@@ -5,8 +5,11 @@ export default function Paginate({ ...rest }: ReactPaginateProps) {
   return (
     <Container
       {...rest}
+      breakLabel="..."
       activeClassName="active"
       activeLinkClassName="active-link"
+      pageRangeDisplayed={0}
+      marginPagesDisplayed={1}
     />
   )
 }

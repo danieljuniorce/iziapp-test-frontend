@@ -6,6 +6,10 @@ export const Container = styled.div`
   ${({ theme }) => css`
     background-color: ${theme.colors.backgroundSecondary}6B;
   `}
+
+  @media only screen and (max-width: 992px) {
+    overflow-x: scroll;
+  }
 `
 
 export const TitleHeader = styled.div`
@@ -23,6 +27,10 @@ export const TitleHeaderText = styled.h1`
 
 export const Content = styled.table`
   padding: 20px 20px;
+
+  @media only screen and (max-width: 992px) {
+    padding: 10px 10px;
+  }
 `
 
 export const Header = styled.thead`
@@ -31,11 +39,23 @@ export const Header = styled.thead`
   th {
     padding: 10px 15px;
   }
+
+  @media only screen and (max-width: 992px) {
+    th {
+      padding: 5px 5px;
+    }
+  }
 `
 
 export const Body = styled.tbody`
   td {
     padding: 10px 15px;
+  }
+
+  @media only screen and (max-width: 992px) {
+    td {
+      padding: 5px 5px;
+    }
   }
 `
 

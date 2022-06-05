@@ -28,6 +28,10 @@ export const TitleHeader = styled.h1`
 
   font-size: 16px;
   font-weight: 600;
+
+  @media only screen and (max-width: 992px) {
+    width: 180px;
+  }
 `
 
 export const Content = styled.div`
@@ -37,6 +41,10 @@ export const Content = styled.div`
   ${({ theme }) => css`
     background-color: ${theme.colors.backgroundSecondary};
   `}
+
+  @media only screen and (max-width: 992px) {
+    width: 300px;
+  }
 `
 
 export const ButtonContainer = styled.div`

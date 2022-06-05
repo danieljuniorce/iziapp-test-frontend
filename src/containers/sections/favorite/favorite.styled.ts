@@ -4,7 +4,11 @@ export const Content = styled.div`
   padding: 20px 20px;
 `
 
-export const Title = styled.h1``
+export const Title = styled.h1`
+  @media only screen and (max-width: 992px) {
+    font-size: 18px;
+  }
+`
 
 export const CardList = styled.div`
   margin-top: 20px;
@@ -12,6 +16,10 @@ export const CardList = styled.div`
   display: grid;
   gap: 10px;
   grid-template-columns: repeat(5, 1fr);
+
+  @media only screen and (max-width: 992px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `
 
 export const Card = styled.div`

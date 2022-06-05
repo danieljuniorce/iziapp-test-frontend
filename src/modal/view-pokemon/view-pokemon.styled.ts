@@ -17,4 +17,9 @@ export const Content = styled.div`
 export const Img = styled.img`
   width: 300px;
   height: 300px;
+
+  @media only screen and (max-width: 992px) {
+    width: 180px;
+    height: 180px;
+  }
 `

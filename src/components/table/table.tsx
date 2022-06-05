@@ -83,42 +83,6 @@ function Table({ header, body }: TableProps) {
     }
   }, [infoPokemon, show, alertRef])
 
-  const _onAddFavoritePerButton = useCallback(
-    ({ id, name }: { id: number; name: string }) => {
-      try {
-        const newPokemonFavorite = verifyDuplicatePokemonInFavorite({
-          id,
-          name,
-        })
-
-        if (newPokemonFavorite.has) {
-          alertRef.current!.show({
-            buttonText: 'Ok',
-            type: 'info',
-            title: 'Hey!!',
-            message: `Pokemon ${name} is already on your favorites list.`,
-          })
-        } else {
-          dispatch(addFavorite(newPokemonFavorite.value))
-          alertRef.current!.show({
-            buttonText: 'Ok',
-            type: 'favorite',
-            title: 'New pokemon in favorites',
-            message: `The pokemon ${name} has been successfully added to your favorites list.`,
-          })
-        }
-      } catch (err) {
-        alertRef.current!.show({
-          buttonText: 'Close',
-          type: 'error',
-          title: 'Oops! Something went wrong.',
-          message: `Didn't add pokemon to favorites.`,
-        })
-      }
-    },
-    [show, alertRef, dispatch]
-  )
-
   const _onClose = useCallback(() => {
     setShow(false)
     setInfoPokemon(null)
@@ -168,19 +132,6 @@ function Table({ header, body }: TableProps) {
                     </ContentImagePokemon>
                   </td>
                   <td>{firstLetterUppercase(bodyInfo.name)}</td>
-                  <td>
-                    <Button
-                      yellow
-                      onClick={() =>
-                        _onAddFavoritePerButton({
-                          id: getIdPokemonInUrl(bodyInfo.url),
-                          name: firstLetterUppercase(bodyInfo.name),
-                        })
-                      }
-                    >
-                      Click for favorite
-                    </Button>
-                  </td>
                   <td>
                     <Link to={`/details/${getIdPokemonInUrl(bodyInfo.url)}`}>
                       <Button>View Details</Button>

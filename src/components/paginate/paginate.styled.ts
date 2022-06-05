@@ -40,4 +40,15 @@ export const Container = styled(ReactPaginate)`
     background: ${({ theme }) => theme.colors.red};
     color: ${({ theme }) => theme.colors.white};
   }
+
+  @media only screen and (max-width: 992px) {
+    li a {
+      padding-top: 8px;
+      padding-bottom: 8px;
+
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 3px;
+    }
+  }
 `
