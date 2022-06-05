@@ -19,6 +19,7 @@ export const Content = styled.div`
 
   ${({ theme }) => css`
     background-color: ${theme.colors.backgroundSecondary};
+    box-shadow: ${theme.colors.boxShadow};
   `}
 `
 

@@ -1,5 +1,5 @@
 import { memo, useCallback, useState } from 'react'
-import { Maximize, Maximize2 } from 'react-feather'
+import { Star, Maximize2 } from 'react-feather'
 import {
   Body,
   Container,
@@ -17,6 +17,7 @@ import {
   getIdPokemonInUrl,
   getImagePokemon,
 } from '../../utils'
+import { ViewPokemon } from '../../modal'
 import { Button } from '../../components'
 import { Link } from 'react-router-dom'
 
@@ -26,11 +27,42 @@ export type TableProps = {
 }
 
 function Table({ header, body }: TableProps) {
+  const [show, setShow] = useState<boolean>(false)
+  const [infoPokemon, setInfoPokemon] = useState<{
+    id: number
+    img: string
+    name: string
+  } | null>(null)
+
+  const _openModalViewPokemon = useCallback(
+    ({ id, name }: { id: number; name: string }) => {
+      setShow(true)
+      setInfoPokemon({ img: getImagePokemon(id), name, id })
+    },
+    [infoPokemon, show]
+  )
+
+  const _onAddFavorite = useCallback(() => {}, [])
+
+  const _onClose = useCallback(() => {
+    setShow(false)
+    setInfoPokemon(null)
+  }, [infoPokemon, show])
+
   return (
     <>
+      <ViewPokemon
+        visible={show}
+        title={`#${infoPokemon?.id} ${infoPokemon?.name}`}
+        img={infoPokemon?.img}
+        onClose={_onClose}
+        onPress={_onAddFavorite}
+        buttonText="Add Favorite"
+        type="favorite"
+      />
       <Container>
         <TitleHeader>
-          <TitleHeaderText>Pokedex</TitleHeaderText>
+          <TitleHeaderText>Poke Collection</TitleHeaderText>
         </TitleHeader>
         <Content>
           <Header>
@@ -46,7 +78,14 @@ function Table({ header, body }: TableProps) {
                 <Divider key={getIdPokemonInUrl(bodyInfo.url)}>
                   <td>{getIdPokemonInUrl(bodyInfo.url)}</td>
                   <td>
-                    <ContentImagePokemon onClick={() => {}}>
+                    <ContentImagePokemon
+                      onClick={() =>
+                        _openModalViewPokemon({
+                          name: firstLetterUppercase(bodyInfo.name),
+                          id: getIdPokemonInUrl(bodyInfo.url),
+                        })
+                      }
+                    >
                       <Maximize2 />
                       <ImgPokemonInTable
                         src={getImagePokemon(getIdPokemonInUrl(bodyInfo.url))}

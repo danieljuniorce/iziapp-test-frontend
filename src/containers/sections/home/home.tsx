@@ -8,6 +8,7 @@ import {
   Paginate,
   Loading,
 } from '../../../components'
+
 import { countPagesPaginate } from '../../../utils'
 
 function Home() {
@@ -25,7 +26,7 @@ function Home() {
         const result = await PokeApi.listPokemonPerPage(page)
         setPokemons(result.results)
         setCountPages(countPagesPaginate(result.count, 20))
-
+        setPageActual(page)
         setLoading(false)
         window.scrollTo({ top: 0, behavior: 'smooth' })
       } catch (err) {

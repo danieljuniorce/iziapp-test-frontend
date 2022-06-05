@@ -25,22 +25,25 @@ export const Content = styled.ul`
   align-items: center;
 `
 
-export const Items = styled(Link)`
+export const Items = styled(Link)<{ active?: boolean }>`
   margin-bottom: 10px;
   padding: 14px;
+  border-radius: 8px;
 
   display: flex;
   gap: 10px;
 
   text-decoration: none;
 
-  ${({ theme }) => css`
+  ${({ theme, active }) => css`
     color: ${theme.colors.textColorSecondary};
+
+    background-color: ${active ? theme.colors.red + 'D4' : 'transparent'};
 
     &:hover {
       border-radius: 8px;
       color: ${theme.colors.textColorSecondary}D4;
-      background-color: ${theme.colors.textColorSecondary}1A;
+      background-color: ${theme.colors.red}D4;
     }
   `}
 `

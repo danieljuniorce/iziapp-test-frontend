@@ -27,6 +27,8 @@ function Details({ match }: RouteComponentProps<{ id: string }>) {
   const [loading, setLoading] = useState<boolean>(false)
   const [infoPokemon, setInfoPokemon] = useState<InfoPokemonProps | null>(null)
 
+  const { id } = match.params
+
   const _loadInfoPokemonPerId = useCallback(async () => {
     setLoading(true)
     try {
@@ -39,7 +41,7 @@ function Details({ match }: RouteComponentProps<{ id: string }>) {
     } finally {
       setLoading(false)
     }
-  }, [match, infoPokemon])
+  }, [id, infoPokemon])
 
   const _getIdForPreviousOrNextPage = (identification: 'next' | 'previous') => {
     const { id } = match.params
@@ -55,7 +57,7 @@ function Details({ match }: RouteComponentProps<{ id: string }>) {
 
   useEffect(() => {
     _loadInfoPokemonPerId()
-  }, [match])
+  }, [id])
 
   return (
     <>

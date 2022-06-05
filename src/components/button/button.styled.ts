@@ -57,7 +57,7 @@ export const Container = styled.button<ColorsProps>`
     if (yellow) {
       return css`
         background-color: ${theme.colors.yellow};
-        color: ${theme.colors.white};
+        color: #212121;
       `
     }
 

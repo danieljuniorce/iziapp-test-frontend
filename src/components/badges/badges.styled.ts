@@ -27,8 +27,6 @@ export const Container = styled.div<BadgesColorsProps>`
   justify-content: center;
   align-items: center;
 
-  box-shadow: ${({ theme }) => theme.colors.boxShadow};
-
   ${({
     theme,
     blue,

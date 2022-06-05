@@ -16,12 +16,16 @@ export const Container = styled.div`
 `
 
 export const Header = styled.div`
+  margin-bottom: 15px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 `
 
 export const TitleHeader = styled.h1`
+  width: 300px;
+
   font-size: 16px;
   font-weight: 600;
 `
@@ -35,25 +39,12 @@ export const Content = styled.div`
   `}
 `
 
-export const Img = styled.img`
-  width: 300px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-`
-
-export const ButtonContainer = styled.div``
-
-export const AbilityContent = styled.div`
-  margin-bottom: 30px;
-
-  display: flex;
-  flex-direction: column;
-`
-
-export const NameAbility = styled.p`
-  margin-bottom: 5px;
+export const ButtonContainer = styled.div`
+  margin-top: 15px;
 `
 
 export const Closed = styled(X).attrs({ size: 20 })`
   cursor: pointer;
 `
+
+export const Message = styled.span``

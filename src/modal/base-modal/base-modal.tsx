@@ -5,34 +5,34 @@ import {
   Content,
   Header,
   TitleHeader,
-  Img,
   ButtonContainer,
-  AbilityContent,
-  NameAbility,
   Closed,
+  Message,
 } from './base-modal.styled'
 import { Button } from '../../components'
-import { forwardRef, memo, useCallback } from 'react'
+import { forwardRef, memo, ReactNode, useCallback } from 'react'
 
 export type BaseModalProps = {
-  visible: boolean
-  id: string | number
-  name: string
-  abilities: Array<{ ability: { name: string } }>
-  img: string
+  title?: string
+  visible?: boolean
+  buttonText?: string
+  type?: 'success' | 'error' | 'info' | 'favorite'
+  children?: ReactNode
+  message?: string
 
   onClose: () => void
-  onAddFavorite: () => void
+  onPress: () => void
 }
 
 function BaseModal({
-  id,
-  name,
-  abilities,
-  onClose,
-  onAddFavorite,
-  img,
+  title,
   visible,
+  onClose,
+  buttonText,
+  onPress,
+  type,
+  children,
+  message,
 }: BaseModalProps) {
   const _onClose = useCallback(() => {
     if (onClose) {
@@ -40,11 +40,11 @@ function BaseModal({
     }
   }, [onClose])
 
-  const _onAddFavorite = useCallback(() => {
-    if (onAddFavorite) {
-      onAddFavorite()
+  const _onPress = useCallback(() => {
+    if (onPress) {
+      onPress()
     }
-  }, [onAddFavorite])
+  }, [onPress])
 
   if (!visible) {
     return null
@@ -54,25 +54,21 @@ function BaseModal({
     <Container>
       <Content>
         <Header>
-          <TitleHeader>
-            #{id} {name}
-          </TitleHeader>
+          {title && <TitleHeader>{title}</TitleHeader>}
           <Closed onClick={_onClose} />
         </Header>
 
-        <Img src={img} alt={id + name} />
-
-        {/* <AbilityContent>
-          {abilities.map((abilitie, index) => (
-            <>
-              <Activity key={index} size={14} /> {abilitie.ability}
-            </>
-          ))}
-        </AbilityContent> */}
-
+        {message && <Message>{message}</Message>}
+        {children}
         <ButtonContainer>
-          <Button yellow onClick={_onAddFavorite}>
-            Add favorite
+          <Button
+            green={type === 'success'}
+            red={type === 'error'}
+            blue={type === 'info'}
+            yellow={type === 'favorite'}
+            onClick={_onPress}
+          >
+            {buttonText}
           </Button>
         </ButtonContainer>
       </Content>
