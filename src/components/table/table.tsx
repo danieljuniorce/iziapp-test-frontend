@@ -1,5 +1,8 @@
-import { memo, useCallback, useState } from 'react'
-import { Star, Maximize2 } from 'react-feather'
+import { memo, useCallback, useRef, useState } from 'react'
+import { Maximize2 } from 'react-feather'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+
 import {
   Body,
   Container,
@@ -19,7 +22,8 @@ import {
 } from '../../utils'
 import { ViewPokemon } from '../../modal'
 import { Button } from '../../components'
-import { Link } from 'react-router-dom'
+import { addFavorite } from '../../redux/reducers/favorite/favorite'
+import Alert, { AlertRefProps } from '../../modal/alert/alert'
 
 export type TableProps = {
   header: Array<string>
@@ -27,6 +31,9 @@ export type TableProps = {
 }
 
 function Table({ header, body }: TableProps) {
+  const dispatch = useDispatch()
+  const alertRef = useRef<AlertRefProps>()
+
   const [show, setShow] = useState<boolean>(false)
   const [infoPokemon, setInfoPokemon] = useState<{
     id: number
@@ -42,7 +49,45 @@ function Table({ header, body }: TableProps) {
     [infoPokemon, show]
   )
 
-  const _onAddFavorite = useCallback(() => {}, [])
+  const _onAddFavorite = useCallback(() => {
+    try {
+      dispatch(addFavorite(infoPokemon!.id))
+
+      alertRef.current!.show({
+        buttonText: 'Ok',
+        type: 'favorite',
+        title: 'New pokemon in favorites',
+        message: `The pokemon ${infoPokemon?.name} has been successfully added to your favorites list.`,
+      })
+    } catch (err) {
+      alertRef.current!.show({
+        buttonText: 'Close',
+        type: 'error',
+        title: 'Oops! Something went wrong.',
+        message: `Didn't add pokemon to favorites.`,
+      })
+    }
+  }, [infoPokemon, show, alertRef])
+
+  const _onAddFavoritePerButton = useCallback((pokemonId: number) => {
+    try {
+      dispatch(addFavorite(pokemonId))
+
+      alertRef.current!.show({
+        buttonText: 'Ok',
+        type: 'favorite',
+        title: 'New pokemon in favorites',
+        message: `Has been successfully added to your favorites list.`,
+      })
+    } catch (err) {
+      alertRef.current!.show({
+        buttonText: 'Close',
+        type: 'error',
+        title: 'Oops! Something went wrong.',
+        message: `Didn't add pokemon to favorites.`,
+      })
+    }
+  }, [])
 
   const _onClose = useCallback(() => {
     setShow(false)
@@ -94,7 +139,14 @@ function Table({ header, body }: TableProps) {
                   </td>
                   <td>{firstLetterUppercase(bodyInfo.name)}</td>
                   <td>
-                    <Button yellow>Click for favorite</Button>
+                    <Button
+                      yellow
+                      onClick={() =>
+                        _onAddFavoritePerButton(getIdPokemonInUrl(bodyInfo.url))
+                      }
+                    >
+                      Click for favorite
+                    </Button>
                   </td>
                   <td>
                     <Link to={`/details/${getIdPokemonInUrl(bodyInfo.url)}`}>
@@ -106,6 +158,7 @@ function Table({ header, body }: TableProps) {
           </Body>
         </Content>
       </Container>
+      <Alert onClose={_onClose} ref={alertRef} />
     </>
   )
 }

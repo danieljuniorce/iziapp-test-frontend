@@ -28,7 +28,7 @@ const storage =
 const persistConfig = {
   key: 'paadmin',
   storage,
-  whitelist: ['theme'],
+  whitelist: ['theme', 'favorite'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

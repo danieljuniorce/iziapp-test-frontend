@@ -10,15 +10,16 @@ import {
   Message,
 } from './base-modal.styled'
 import { Button } from '../../components'
-import { forwardRef, memo, ReactNode, useCallback } from 'react'
+import { CSSProperties, forwardRef, memo, ReactNode, useCallback } from 'react'
 
 export type BaseModalProps = {
-  title?: string
+  title?: string | null
   visible?: boolean
-  buttonText?: string
+  buttonText?: string | null
   type?: 'success' | 'error' | 'info' | 'favorite'
   children?: ReactNode
-  message?: string
+  message?: string | null
+  styles?: CSSProperties
 
   onClose: () => void
   onPress: () => void
@@ -33,6 +34,7 @@ function BaseModal({
   type,
   children,
   message,
+  styles,
 }: BaseModalProps) {
   const _onClose = useCallback(() => {
     if (onClose) {
@@ -51,7 +53,7 @@ function BaseModal({
   }
 
   return (
-    <Container>
+    <Container style={styles}>
       <Content>
         <Header>
           {title && <TitleHeader>{title}</TitleHeader>}
