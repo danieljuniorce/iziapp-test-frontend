@@ -26,7 +26,7 @@ const storage =
     : createNoopStorage()
 
 const persistConfig = {
-  key: 'paadmin',
+  key: '@pokecollection',
   storage,
   whitelist: ['theme', 'favorite'],
 }

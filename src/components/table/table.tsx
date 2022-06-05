@@ -19,6 +19,7 @@ import {
   firstLetterUppercase,
   getIdPokemonInUrl,
   getImagePokemon,
+  verifyDuplicatePokemonInFavorite,
 } from '../../utils'
 import { ViewPokemon } from '../../modal'
 import { Button } from '../../components'
@@ -51,14 +52,27 @@ function Table({ header, body }: TableProps) {
 
   const _onAddFavorite = useCallback(() => {
     try {
-      dispatch(addFavorite(infoPokemon!.id))
-
-      alertRef.current!.show({
-        buttonText: 'Ok',
-        type: 'favorite',
-        title: 'New pokemon in favorites',
-        message: `The pokemon ${infoPokemon?.name} has been successfully added to your favorites list.`,
+      const newPokemonFavorite = verifyDuplicatePokemonInFavorite({
+        id: infoPokemon!.id,
+        name: infoPokemon!.name,
       })
+
+      if (newPokemonFavorite.has) {
+        alertRef.current!.show({
+          buttonText: 'Ok',
+          type: 'info',
+          title: 'Hey!!',
+          message: `Pokemon ${infoPokemon?.name} is already on your favorites list.`,
+        })
+      } else {
+        dispatch(addFavorite(newPokemonFavorite.value))
+        alertRef.current!.show({
+          buttonText: 'Ok',
+          type: 'favorite',
+          title: 'New pokemon in favorites',
+          message: `The pokemon ${infoPokemon?.name} has been successfully added to your favorites list.`,
+        })
+      }
     } catch (err) {
       alertRef.current!.show({
         buttonText: 'Close',
@@ -69,25 +83,41 @@ function Table({ header, body }: TableProps) {
     }
   }, [infoPokemon, show, alertRef])
 
-  const _onAddFavoritePerButton = useCallback((pokemonId: number) => {
-    try {
-      dispatch(addFavorite(pokemonId))
+  const _onAddFavoritePerButton = useCallback(
+    ({ id, name }: { id: number; name: string }) => {
+      try {
+        const newPokemonFavorite = verifyDuplicatePokemonInFavorite({
+          id,
+          name,
+        })
 
-      alertRef.current!.show({
-        buttonText: 'Ok',
-        type: 'favorite',
-        title: 'New pokemon in favorites',
-        message: `Has been successfully added to your favorites list.`,
-      })
-    } catch (err) {
-      alertRef.current!.show({
-        buttonText: 'Close',
-        type: 'error',
-        title: 'Oops! Something went wrong.',
-        message: `Didn't add pokemon to favorites.`,
-      })
-    }
-  }, [])
+        if (newPokemonFavorite.has) {
+          alertRef.current!.show({
+            buttonText: 'Ok',
+            type: 'info',
+            title: 'Hey!!',
+            message: `Pokemon ${name} is already on your favorites list.`,
+          })
+        } else {
+          dispatch(addFavorite(newPokemonFavorite.value))
+          alertRef.current!.show({
+            buttonText: 'Ok',
+            type: 'favorite',
+            title: 'New pokemon in favorites',
+            message: `The pokemon ${name} has been successfully added to your favorites list.`,
+          })
+        }
+      } catch (err) {
+        alertRef.current!.show({
+          buttonText: 'Close',
+          type: 'error',
+          title: 'Oops! Something went wrong.',
+          message: `Didn't add pokemon to favorites.`,
+        })
+      }
+    },
+    [show, alertRef, dispatch]
+  )
 
   const _onClose = useCallback(() => {
     setShow(false)
@@ -142,7 +172,10 @@ function Table({ header, body }: TableProps) {
                     <Button
                       yellow
                       onClick={() =>
-                        _onAddFavoritePerButton(getIdPokemonInUrl(bodyInfo.url))
+                        _onAddFavoritePerButton({
+                          id: getIdPokemonInUrl(bodyInfo.url),
+                          name: firstLetterUppercase(bodyInfo.name),
+                        })
                       }
                     >
                       Click for favorite

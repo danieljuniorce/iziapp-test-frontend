@@ -5,5 +5,5 @@ export default function firstLetterUppercase(text: string): string {
     (name) => name.charAt(0).toUpperCase() + name.slice(1) + ' '
   )
 
-  return result.toString().replace(',', '')
+  return result[0]
 }
