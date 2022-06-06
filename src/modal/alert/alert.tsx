@@ -6,7 +6,7 @@ import {
   Ref,
   forwardRef,
 } from 'react'
-import BaseModal, { BaseModalProps } from '../base-modal/base-modal'
+import BaseModal from '@modal/base-modal/base-modal'
 
 export type AlertProps = {
   onClose?: () => void

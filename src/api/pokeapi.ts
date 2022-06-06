@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { PokemonTypesProps } from '../interface/pokemon'
+import { PokemonTypesProps } from '@interface/pokemon'
 import { Axios } from './axios-config'
 
 export type ListPokemonProps = {

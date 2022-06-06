@@ -20,11 +20,11 @@ import {
   getIdPokemonInUrl,
   getImagePokemon,
   verifyDuplicatePokemonInFavorite,
-} from '../../utils'
-import { ViewPokemon } from '../../modal'
-import { Button } from '../../components'
-import { addFavorite } from '../../redux/reducers/favorite/favorite'
-import Alert, { AlertRefProps } from '../../modal/alert/alert'
+} from '@utils'
+import { ViewPokemon } from '@modal'
+import { Button } from '@components'
+import { addFavorite } from '@redux/reducers/favorite/favorite'
+import Alert, { AlertRefProps } from '@modal/alert/alert'
 
 export type TableProps = {
   header: Array<string>

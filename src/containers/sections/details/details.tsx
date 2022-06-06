@@ -21,17 +21,11 @@ import {
   ButtonPreviousOrNext,
 } from './details.styled'
 
-import PokeApi, { InfoPokemonProps } from '../../../api/pokeapi'
-import {
-  firstLetterUppercase,
-  verifyDuplicatePokemonInFavorite,
-} from '../../../utils'
-import { RootState } from '../../../redux/reducers'
-import Alert, { AlertRefProps } from '../../../modal/alert/alert'
-import {
-  addFavorite,
-  removeFavorite,
-} from '../../../redux/reducers/favorite/favorite'
+import PokeApi, { InfoPokemonProps } from '@api/pokeapi'
+import { firstLetterUppercase, verifyDuplicatePokemonInFavorite } from '@utils'
+import { RootState } from '@redux/reducers'
+import Alert, { AlertRefProps } from '@modal/alert/alert'
+import { addFavorite, removeFavorite } from '@redux/reducers/favorite/favorite'
 
 function Details({ match }: RouteComponentProps<{ id: string }>) {
   const dispatch = useDispatch()

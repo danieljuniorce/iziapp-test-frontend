@@ -1,6 +1,6 @@
 import { memo, ReactNode } from 'react'
-import { PokemonTypesProps } from '../../interface/pokemon'
 import { BadgesColorsProps, Container } from './badges.styled'
+import { PokemonTypesProps } from '@interface/pokemon'
 
 export type BadgesProps = BadgesColorsProps & {
   children: ReactNode

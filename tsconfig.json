@@ -28,7 +28,17 @@
       "@redux": ["./redux"],
       "@redux/*": ["./redux/*"],
       "@styles": ["./styles"],
-      "@styles/*": ["./styles/*"]
+      "@styles/*": ["./styles/*"],
+      "@modal": ["./modal"],
+      "@modal/*": ["./modal/*"],
+      "@api": ["./api"],
+      "@api/*": ["./api/*"],
+      "@utils": ["./utils"],
+      "@utils/*": ["./utils/*"],
+      "@assets": ["./assets"],
+      "@assets/*": ["./assets/*"],
+      "@interface": ["./interface"],
+      "@interface/*": ["./interface/*"]
     }
   },
   "include": ["src"],

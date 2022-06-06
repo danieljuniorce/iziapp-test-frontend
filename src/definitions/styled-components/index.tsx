@@ -1,8 +1,8 @@
 import { Moon, Sun } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { changeTheme } from '../../redux/reducers/theme/theme'
-import { RootState } from '../../redux/reducers'
+import { changeTheme } from '@redux/reducers/theme/theme'
+import { RootState } from '@redux/reducers'
 import light from './light'
 import dark from './dark'
 import { memo, useCallback } from 'react'

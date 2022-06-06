@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import Home from '../containers/sections/home/home'
-import Details from '../containers/sections/details/details'
-import Favorite from '../containers/sections/favorite/favorite'
+import Home from '@containers/sections/home/home'
+import Details from '@containers/sections/details/details'
+import Favorite from '@containers/sections/favorite/favorite'
 
 function AppNavigation() {
   return (

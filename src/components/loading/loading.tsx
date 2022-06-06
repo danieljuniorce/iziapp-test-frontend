@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Lottie from 'react-lottie'
 
-import loading from '../../assets/animation/loading.json'
+import loading from '@assets/animation/loading.json'
 
 const Container = styled.div`
   width: 100%;

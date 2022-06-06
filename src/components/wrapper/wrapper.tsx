@@ -1,7 +1,4 @@
 import { ReactNode, memo } from 'react'
-import styled from 'styled-components'
-
-const Container = styled.div``
 
 function Wrapper({ children }: { children: ReactNode }) {
   return (

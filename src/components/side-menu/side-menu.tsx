@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { Home, Star } from 'react-feather'
-import { ChangeTheme } from '../../definitions/styled-components'
+import { ChangeTheme } from '@definitions/styled-components'
 import Tooltip from 'react-tooltip'
 import { useLocation } from 'react-router-dom'
 

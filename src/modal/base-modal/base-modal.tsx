@@ -1,5 +1,3 @@
-import { Activity } from 'react-feather'
-
 import {
   Container,
   Content,
@@ -9,7 +7,7 @@ import {
   Closed,
   Message,
 } from './base-modal.styled'
-import { Button } from '../../components'
+import { Button } from '@components'
 import { CSSProperties, forwardRef, memo, ReactNode, useCallback } from 'react'
 
 export type BaseModalProps = {

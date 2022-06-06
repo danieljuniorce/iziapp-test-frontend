@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import BaseModal, { BaseModalProps } from '../base-modal/base-modal'
+import BaseModal, { BaseModalProps } from '@modal/base-modal/base-modal'
 
 import { Content, Img } from './view-pokemon.styled'
 
