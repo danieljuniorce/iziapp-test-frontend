@@ -19,7 +19,7 @@
 8. React Router Dom v5
 9. React LottieFile
 
-[Link de Demostração](https://iziapp-test-frontend.vercel.app/)
+[Link de Demostração](https://iziapp-test-frontend.netlify.app)
 
 ### Instruções de Instalação
 
