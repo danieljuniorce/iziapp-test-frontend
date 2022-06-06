@@ -17,8 +17,16 @@ export const CardList = styled.div`
   gap: 10px;
   grid-template-columns: repeat(5, 1fr);
 
-  @media only screen and (max-width: 992px) {
-    grid-template-columns: repeat(1, 1fr);
+  @media screen and (min-width: 200px) and (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media screen and (min-width: 520px) and (max-width: 780px) {
+    grid-template-columns: 2fr;
+  }
+
+  @media screen and (min-width: 780px) and (max-width: 992px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 `
 

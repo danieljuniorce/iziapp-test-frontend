@@ -21,7 +21,6 @@ function Favorite() {
   const dispatch = useDispatch()
   const favorite = useSelector((state: RootState) => state.favorite?.favorite)
   const alertRef = useRef<AlertRefProps>()
-  const [loading, setLoading] = useState<boolean>(false)
 
   const _removePokemonTheOfListFavorite = useCallback(
     (pokemonId: number) => {
@@ -46,40 +45,30 @@ function Favorite() {
     [dispatch, favorite]
   )
 
-  const RenderPokemonListFavorite = () => {
-    return (
-      <CardList>
-        {favorite &&
-          favorite.map((favorite, index) => (
-            <Card key={index}>
-              <TitleCard>#{favorite.id + ' ' + favorite.name}</TitleCard>
-              <Link to={`/details/${favorite.id}`}>
-                <ImgCard src={getImagePokemon(favorite.id)} />
-              </Link>
-
-              <Button
-                red
-                onClick={() => _removePokemonTheOfListFavorite(favorite.id)}
-              >
-                Remove Favorite
-              </Button>
-            </Card>
-          ))}
-
-        {favorite.length === 0 &&
-          'Not adding any pokemon to your favorites list.'}
-      </CardList>
-    )
-  }
-
   return (
     <>
-      <Loading visible={loading} />
       <SideMenu />
       <Wrapper>
         <Content>
           <Title>List Favorite Pokemon</Title>
-          <RenderPokemonListFavorite />
+          <CardList>
+            {favorite &&
+              favorite.map((favorite, index) => (
+                <Card key={index}>
+                  <TitleCard>#{favorite.id + ' ' + favorite.name}</TitleCard>
+                  <Link to={`/details/${favorite.id}`}>
+                    <ImgCard src={getImagePokemon(favorite.id)} />
+                  </Link>
+
+                  <Button
+                    red
+                    onClick={() => _removePokemonTheOfListFavorite(favorite.id)}
+                  >
+                    Remove Favorite
+                  </Button>
+                </Card>
+              ))}
+          </CardList>
         </Content>
       </Wrapper>
 
